@@ -11,7 +11,7 @@ This runs on top of rsmoorthy/wine-alpine, a minimal Wine installation on top of
 ## Usage
 
 ```
-docker run --name mssql -p 1433:1433 -d rsmoorthy/sql2000
+docker run --name mssql -p 1433:1433 -d rsmoorthy/mssql
 ```
 
 From any of the clients, connect to the service on the port 1433, user is "sa" and empty password
