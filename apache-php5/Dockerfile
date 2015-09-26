@@ -45,10 +45,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends\
     php5enmod mcrypt &&\
     php5enmod mongo &&\
     pear install --alldeps Mail &&\
-	curl -OLs https://github.com/rsmoorthy/php5-uuid/releases/download/1.0-1/php5-uuid_1.0-1.deb && \
+	curl --insecure -OL https://github.com/rsmoorthy/php5-uuid/releases/download/1.0-1/php5-uuid_1.0-1.deb && \
 	dpkg -i php5-uuid_1.0-1.deb && \
 	rm php5-uuid_1.0-1.deb && \
-	curl -OLs https://github.com/rsmoorthy/php5-yaml/releases/download/1.0-1/php5-yaml_1.0-1.deb && \
+	curl --insecure -OL https://github.com/rsmoorthy/php5-yaml/releases/download/1.0-1/php5-yaml_1.0-1.deb && \
 	dpkg -i php5-yaml_1.0-1.deb && \
 	rm php5-yaml_1.0-1.deb && \
 #    yes "" | pecl install uuid &&\
