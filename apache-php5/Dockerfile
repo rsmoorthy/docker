@@ -17,17 +17,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends\
     vim-tiny\
 	less\
 	curl\
-	netcat-openbsd\
-    wget\
-    build-essential && \
-	rm -rf /var/lib/apt/lists/* && rm -rf /usr/share/doc/* && rm -rf /usr/share/man/* && rm -rf /usr/share/locale/*
+	wget\
+	netcat-openbsd && \
+#   rm -rf /var/lib/apt/lists/* &&\
+	rm -rf /usr/share/doc/* && rm -rf /usr/share/man/* && rm -rf /usr/share/locale/*
 
 # PHP && Apache
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends\
     php5\
     php5-curl\
     php5-gd\
-    php5-dev\
     php5-imap\
     php5-imagick\
     php-pear\
@@ -41,18 +40,23 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends\
     libuuid1 uuid-dev uuid-runtime\
 	libyaml-dev\
     libapache2-mod-php5 &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    a2enmod rewrite &&\
-    a2enmod actions &&\
-    pear install --alldeps Mail &&\
-    yes "" | pecl install uuid &&\
-    echo 'extension=uuid.so' | tee /etc/php5/mods-available/uuid.ini &&\
-    php5enmod uuid &&\
-    yes "" | pecl install yaml &&\
-    echo 'extension=yaml.so' | tee /etc/php5/mods-available/yaml.ini &&\
-    php5enmod yaml &&\
+#    rm -rf /var/lib/apt/lists/* &&\
+    a2enmod rewrite actions &&\
     php5enmod mcrypt &&\
     php5enmod mongo &&\
+    pear install --alldeps Mail &&\
+	curl -OLs https://github.com/rsmoorthy/php5-uuid/releases/download/1.0-1/php5-uuid_1.0-1.deb && \
+	dpkg -i php5-uuid_1.0-1.deb && \
+	rm php5-uuid_1.0-1.deb && \
+	curl -OLs https://github.com/rsmoorthy/php5-yaml/releases/download/1.0-1/php5-yaml_1.0-1.deb && \
+	dpkg -i php5-yaml_1.0-1.deb && \
+	rm php5-yaml_1.0-1.deb && \
+#    yes "" | pecl install uuid &&\
+#    echo 'extension=uuid.so' | tee /etc/php5/mods-available/uuid.ini &&\
+#    php5enmod uuid &&\
+#    yes "" | pecl install yaml &&\
+#    echo 'extension=yaml.so' | tee /etc/php5/mods-available/yaml.ini &&\
+#    php5enmod yaml &&\
     rm -rf /usr/share/doc/* &&\
     rm -rf /usr/share/man/* &&\
     rm -rf /usr/share/locale/* &&\
@@ -70,12 +74,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends\
 #	rm wkhtmltox.deb && \
 #    rm -rf /var/lib/apt/lists/* && rm -rf /usr/share/doc/* && rm -rf /usr/share/man/* && rm -rf /usr/share/locale/*
 
-RUN apt-get -y install \
+RUN apt-get -y install --no-install-recommends \
 	git openssh-server cron logrotate supervisor && \
 	mkdir /var/run/sshd && \
 	echo 'root:journo' | chpasswd && \
 	sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-	rm -rf /var/lib/apt/lists/* && rm -rf /usr/share/doc/* && rm -rf /usr/share/man/* && rm -rf /usr/share/locale/*
+#	rm -rf /var/lib/apt/lists/* && \
+	rm -rf /usr/share/doc/* && rm -rf /usr/share/man/* && rm -rf /usr/share/locale/*
 
 
 # Config files.
