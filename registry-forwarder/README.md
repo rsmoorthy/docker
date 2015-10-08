@@ -1,6 +1,6 @@
 # Docker Registry Forwarder
 
-Easily pull and push local private registries. The image is only 8MB in size
+Easily pull and push to local private registries, without needing SSL certificates. The image is only 18MB in size
 
 ## Synopsis
 

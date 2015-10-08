@@ -1,5 +1,5 @@
+FROM elyase/pyrun:2.7
 #FROM elyase/staticpython
-FROM ubuntu:15.04
 
 MAINTAINER https://github.com/rsmoorthy
 
