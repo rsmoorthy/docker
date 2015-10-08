@@ -1,8 +1,8 @@
-# Docker Registry Forwarder
+## Docker Registry Forwarder
 
 Easily pull and push to local private registries, without needing SSL certificates. The image is only 18MB in size
 
-## Synopsis
+### Synopsis
 
 Run the registry port forwarder, as follows:
 
@@ -17,7 +17,7 @@ docker pull localhost:5000/your-image
 docker push localhost:5000/my-image
 ```
 
-## Why this is needed?
+### Why this is needed?
 
 Docker requires that the private registry supports SSL and proper certificates installed. In most cases, private registries are running within development environment 
 and don't like to have certificates installed.
@@ -39,7 +39,7 @@ the connection, everytime it disconnects.
 
 The port forwarder helps solve the problem easily
 
-## Credits
+### Credits
 
-* elyase/staticpython for a super-small 8MB Python
+* elyase/pyrun:2.7 for a super-small 18MB Python
 * http://voorloopnul.com/blog/a-python-proxy-in-less-than-100-lines-of-code/ for a small TCP port forwarding code
