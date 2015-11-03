@@ -73,6 +73,7 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
 
 
 # Config files.
+COPY conf/apache/000-default.conf /etc/apache2/sites-available/
 COPY conf/php5/apache2/php.ini /etc/php5/apache2/php.ini
 COPY conf/php5/cli/php.ini /etc/php5/cli/php.ini
 COPY script/index.php /var/www/index.php
