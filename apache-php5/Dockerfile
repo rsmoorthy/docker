@@ -1,7 +1,8 @@
-FROM ubuntu:15.04
+FROM rsmoorthy/debian
 
 MAINTAINER Moorthy RS "rsmoorthy@gmail.com"
 
+ENV DEBIAN_FRONTEND	noninteractive
 ENV APACHE_RUN_USER  root
 ENV APACHE_RUN_GROUP root
 ENV APACHE_PID_FILE  /var/run/apache2.pid
@@ -9,20 +10,6 @@ ENV APACHE_RUN_DIR   /var/run/apache2
 ENV APACHE_LOCK_DIR  /var/lock/apache2
 ENV APACHE_LOG_DIR   /var/log/apache2
 ENV APACHE_USER_UID 0
-
-ENV DEBIAN_FRONTEND	noninteractive
-
-RUN sed -i -e 's/^deb-src/# deb-src/' /etc/apt/sources.list
-
-RUN apt-get update && apt-get -y install --no-install-recommends\
-    vim-tiny\
-	less\
-	curl\
-	wget\
-	nano\
-	netcat-openbsd && \
-	rm -rf /var/lib/apt/lists/* &&\
-	rm -rf /usr/share/doc/* && rm -rf /usr/share/man/* && rm -rf /usr/share/locale/*
 
 # PHP && Apache
 RUN apt-get update && apt-get -y install --no-install-recommends\
@@ -62,15 +49,6 @@ RUN apt-get update && apt-get -y install --no-install-recommends\
     rm -rf /usr/share/man/* &&\
     rm -rf /usr/share/locale/* &&\
     echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-RUN apt-get update && apt-get -y install --no-install-recommends \
-	git openssh-server cron logrotate supervisor && \
-	mkdir /var/run/sshd && \
-	echo 'root:root' | chpasswd && \
-	sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-	rm -rf /var/lib/apt/lists/* && \
-	rm -rf /usr/share/doc/* && rm -rf /usr/share/man/* && rm -rf /usr/share/locale/*
-
 
 # Config files.
 COPY conf/apache/000-default.conf /etc/apache2/sites-available/
