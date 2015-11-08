@@ -78,7 +78,7 @@ class TheServer:
             clientsock.close()
 
     def on_close(self):
-        print self.s.getpeername(), "has disconnected"
+        print "disconnected"
         #remove objects from input_list
         self.input_list.remove(self.s)
         self.input_list.remove(self.channel[self.s])
