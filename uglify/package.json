@@ -1,0 +1,20 @@
+{
+  "name": "uglify-aas",
+  "version": "1.0.0",
+  "description": "uglify JS and CSS as a service",
+  "author": "https://github.com/rsmoorthy",
+  "license": "MIT",
+  "main": "app.js",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/rsmoorthy/docker/uglify-aas"
+  },
+  "dependencies": {
+    "uglify-js": "^2.5.0",
+    "uglifycss": "0.0.18",
+    "express": "^4.13.3",
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "multer": "^1.0.6"
+  }
+}
