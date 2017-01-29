@@ -21,6 +21,8 @@ RUN sed -i -e 's/^deb-src/# deb-src/' /etc/apt/sources.list && apt-get update &&
 COPY pdf_service.php /var/www/index.php
 COPY MTCORSVA.TTF /usr/local/share/fonts/MTCORSVA.TTF
 COPY php.ini /etc/php5/cli/php.ini
+COPY bootstrap.min.css /tmp
+COPY bootstrap.min.js /tmp
 
 EXPOSE 80
 

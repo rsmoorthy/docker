@@ -16,3 +16,5 @@ RUN apt-get update && wget -O wkhtmltox.deb http://download.gna.org/wkhtmltopdf/
 
 # Config files.
 COPY pdf_service.php /var/www/index.php
+COPY bootstrap.min.css /tmp
+COPY bootstrap.min.js /tmp
