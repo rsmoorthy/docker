@@ -1,0 +1,153 @@
+;; PRODUCT: <Enter the product name>
+;; PRODUCT-ID: c6fc28db-ccf5-40b6-a12f-466ef93935c9
+;; AUTHOR: TallyDeveloper
+   
+    [#Line: BILL Vouchers]
+	Add : Field : After : BILLVCH Amount : Mynarration
+	
+	[Field : Mynarration]
+	Use : Namefield
+	set as :$narration
+	Width : 100 mms
+	lines :0
+
+;;[#form : Comprehensive Invoice]
+Add : Option : Sivan : @@issales 
+
+;;[#Form : Simple Printed Invoice]
+Add : Option : Sivan : @@issales 
+
+;;[!Form : Sivan]
+Delete : parts 
+Delete : Bottom parts
+Delete : pagebreak
+
+;;Add : Parts       : STDInvoiceTop, DSP VoucherTime, EXPINV Jurisdiction, EXPSMP Copy, +
+					EXPSMP InvTitle,+
+					RSEXPSMP Company, +
+					RSEXP Invno, +
+					RSEXPSMP Party, +
+                  EXPSMP Terms, +
+                  EXPSMP Column, +
+                  EXPSMP Invoice
+
+  Add:   BottomParts : EXPSMP Totals, EXPSMP EOE, EXPSMP OtherDetails, EXPSMP SignOff, EXPINV InvoiceCompGen
+
+   ;; Page Break  : EXPSMP ClPageBreak, RsEXPSMP OpPageBreak
+
+Local  : Field : Default : Style : Mystyle
+
+
+[Part: RsEXPSMP OpPageBreak]
+
+    Parts       : STDInvoiceTop, DSP VoucherTime, EXPINV Jurisdiction, EXPSMP Copy, +
+                 EXPSMP InvTitle,+
+				RSEXPSMP Company, +
+				RSEXP Invno, +
+				RSEXPSMP Party, +
+    Vertical    : Yes
+
+
+
+;      [#Line: EXPSMP Column1]
+;		Delete : Left Fields : EXPINV SLNoTitle, EXPINV DescTitle
+;        Delete :  Right Fields: EXPINV PartNoTitle, EXPINV MRPTitle, EXPINV VATPercTitle, EXPINV DueTitle, EXPINV QtyTitle, EXPINV RateTitle, EXPINV RatePerTitle, EXPINV DiscTitle, EXPINV AmountTitle
+;            
+;			Add:Left Fields : EXPINV SLNoTitle,EXPINV PartNoTitle, EXPINV DescTitle
+;            Add : Right Fields:  EXPINV MRPTitle, EXPINV VATPercTitle, EXPINV DueTitle, EXPINV QtyTitle, EXPINV RateTitle, EXPINV RatePerTitle, EXPINV DiscTitle, EXPINV AmountTitle
+;            
+;
+;        [#Line: EXPSMP Column2]
+;
+;			Delete : Left Field	: EXPINV SLNoTitle
+;            Delete : Right Fields: EXPINV PartNoTitle, EXPINV MRPTitle, EXPINV VATPercTitle, EXPINV DueTitle, EXPINV ActualQtyTitle, EXPINV BilledQtyTitle, EXPINV RateTitle, EXPINV RatePerTitle, EXPINV DiscTitle, EXPINV AmountTitle
+;			
+;			Add : Left Field	: EXPINV SLNoTitle,EXPINV PartNoTitle
+;            Add : Right Fields: EXPINV MRPTitle, EXPINV VATPercTitle, EXPINV DueTitle, EXPINV ActualQtyTitle, EXPINV BilledQtyTitle, EXPINV RateTitle, EXPINV RatePerTitle, EXPINV DiscTitle, EXPINV AmountTitle
+;			
+;			
+;       [#Line: EXPSMP InvDetails]
+;
+;        Delete : Left Fields : EXPINV SLNo, EXPINV Desc
+;        Delete : Right Fields: EXPINV PartNo, EXPINV MRPValue, EXPINV VATPerc, EXPINV DueOn, EXPINV ActualQty, EXPINV Qty, EXPINV Rate, EXPINV RatePer, EXPINV Discount, EXPINV Amount
+;				
+;		Add : Left Fields : EXPINV SLNo,EXPINV PartNo, EXPINV Desc
+;        Add : Right Fields: EXPINV MRPValue, EXPINV VATPerc, EXPINV DueOn, EXPINV ActualQty, EXPINV Qty, EXPINV Rate, EXPINV RatePer, EXPINV Discount, EXPINV Amount
+;				
+;
+;    [#Line: EXPINV AccDetails]
+;
+;        Delete :  Left Fields : EXPINV SLNoTitle, EXPINV AccSign, EXPINV AccMarks, EXPINV AccPackages, EXPINV AccDesc
+;        Delete :  Right Fields: EXPINV PartNo, EXPINV MRPAccValue, VAT AccRatePerc, EXPINV AccDueOn, EXPINV AccActualQty, EXPINV AccQty, EXPINV AccRate, EXPINV AccRatePer, EXPINV AccDiscount, EXPINV AccAmount, EXPINV TCSAmount, EXPINV AccSRVTAmount, EXPINV SubTot
+;	
+;
+;       Add :  Left Fields : EXPINV SLNoTitle, EXPINV AccSign, EXPINV AccMarks, EXPINV AccPackages,EXPINV PartNo, EXPINV AccDesc
+;        Add :  Right Fields:  EXPINV MRPAccValue, VAT AccRatePerc, EXPINV AccDueOn, EXPINV AccActualQty, EXPINV AccQty, EXPINV AccRate, EXPINV AccRatePer, EXPINV AccDiscount, EXPINV AccAmount, EXPINV TCSAmount, EXPINV AccSRVTAmount, EXPINV SubTot
+;	
+;
+;
+;        [#Line: EXPSMP Totals]
+;		Delete : Left Field	: EXPINV SLNoTitle
+;        Delete :   RightFields : Info Field, EXPINV PartNoTitle, EXPINV MRPTotal, VAT AccTotPerc, EXPINV AccDueOn, EXPINV ActualQtyTotal, EXPINV BilledQtyTotal, EXPINV RateTotal, EXPINV RatePerTotal, EXPINV DiscTotal, EXPINV Total
+;        Add : Left Field	: EXPINV SLNoTitle,EXPINV PartNoTitle
+;         Add :    RightFields : Info Field, EXPINV MRPTotal, VAT AccTotPerc, EXPINV AccDueOn, EXPINV ActualQtyTotal, EXPINV BilledQtyTotal, EXPINV RateTotal, EXPINV RatePerTotal, EXPINV DiscTotal, EXPINV Total
+;            
+
+
+
+
+	[Part : RSEXPSMP Party]
+   Lines           : EXPSMP PartyName, EXPSMP PartyAddr
+  Repeat  : EXPSMP PartyAddr : Address
+
+	[#Line : 		 EXPSMP PartyName]
+		Add : Option : RsEXPSMP PartyName : @@issales
+		
+	[!Line : RsEXPSMP PartyName]
+    Local      : Field : Info Field     : Info      : $$LocaleString:"To :"
+		
+	     [#Field: EXPAddr]
+			 Add : Option : RsExpaddr : @@issales
+			 
+	[!Field : RsExpaddr]
+Delete :   Border     : Thin Bottom : $$Line = $$NumItems AND $$IsEmpty:$Email:Company:##SVCurrentCompany
+            	
+
+[Part: RSEXPSMP Company]
+
+        Lines       :EXPSMP Company,EXPSMP Addr
+		Repeat : EXPSMP Addr : Company Address
+		
+
+        [#Line: EXPSMP Company]
+			
+	Add : Option : RsEXPSMP Company : @@issales
+		
+		[!Line : RsEXPSMP Company ]
+
+ Local       : Field : Simple Field : Style      : Large Bold
+
+
+		
+;;[Part : RSEXP Invno]
+		Lines : EXPSMP Date
+
+	[#Line: EXPSMP Date]
+		Add : Option : Rs EXPSMP Date : @@issales
+		
+		[!Line : Rs EXPSMP Date]
+	     Local       : Field : Simple Field : Set as     : "Bill No:"
+         Local       : Field : Info Field   : Info       : $$LocaleString:"Bill Dated"
+            	
+;;
+ ;;  [#Line: EXPSMP Column1]
+	Add : Option : Rs EXPSMP Column1: @@issales
+		
+		[!Line : Rs EXPSMP Column1]   
+	Local : Field : EXPINV DescTitle: Set as      : $$LocaleString:"Part Name"
+   
+
+[Style : Mystyle]
+	Font : "Times NeW Roman"
+	Height : 12
+	

@@ -1,0 +1,45 @@
+
+	
+
+[#Line: STKALL Details]
+Explode     : EI DescExplosion  : NOT $$IsEmpty:$StockItemName AND NOT $$IsEmpty:$BasicUserDescription     	;;:@@isjournal  AND NOT $$IsEmpty:$StockItemName AND NOT $$IsEmpty:$BasicUserDescription
+;;NOT $$IsEmpty:$StockItemName AND @@InvWithAddl AND NOT $$IsEmpty:$BasicUserDescription
+   ;; Explode     : EI DescExplosion 			: NOT $$IsEmpty:$StockItemName AND NOT $$IsEmpty:$BasicUserDescription
+	;;            NextPage    : NOT $$DoExplosionsFit OR +
+	 ;;                         (($$LineNumber = $$LastLineNumber) AND ($$BalanceLines > 0 ) AND ($$BalanceLines < 2))
+	            
+
+[#Field: VCH StockItem]
+Sub Form    : EI DescExplosion :  NOT $$IsSysName:$$Value AND NOT $$IsExploded:EIDescExplosion   ;;:NOT $$IsEmpty:$StockItemName AND NOT $$IsEmpty:$BasicUserDescription 
+
+		 
+			 
+			 [#Line: DSP VchExplosion]
+
+			Indent      : if ##IsDayBook then @@ShortDateWidth + 1 else @@ShortDateWidth + 4	
+			Fields      : DSP VchExplAccount , DSP VchExplValue
+			Next Page   : (($$LineNumber = $$LastLineNumber) AND $$IsLastOfSet)
+			
+			Explode     : MEI DescExplosion  : NOT $$IsEmpty:$StockItemName AND NOT $$IsEmpty:$BasicUserDescription  
+
+
+							[Part: MEI DescExplosion]
+                            Line    : MEI DescExplosion
+                            Repeat  : MEI DescExplosion : BasicUserDescription
+                            BreakOn : $$IsEmpty:$BasicUserDescription
+                            Scroll  : Vertical
+
+                            [Line: MEI DescExplosion]
+
+                                Fields  : MEI Desc
+                                Indent      : If $$InPrintMode Then 10 Else 10
+
+                                [Field: MEI Desc]
+
+                                    Use     : Name Field
+                                    Style   : Small Italic
+                                    Storage : BasicUserDescription
+                                	Set as  : If (($$ExplodeLevel = 0) AND ($$Line = 1) AND NOT ##SVAcctsInvoice) Then $Description:StockItem:$StockItemName Else $$Value
+
+
+

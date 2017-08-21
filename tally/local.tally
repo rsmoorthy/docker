@@ -1,0 +1,3 @@
+?package(local.tally):needs="X11" section="/" title="Tally" command="/usr/bin/wine /root/.wine/drive_c/Tally.ERP9/tally.exe" hints="IDE,Small,Gtk" sort="001"
+
+
