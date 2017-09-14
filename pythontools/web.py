@@ -10,7 +10,10 @@ import json
 class S(BaseHTTPRequestHandler, object):
 
   def __init__(self, *args, **kwargs):
-    self.parser = pql.SchemaFreeParser()
+    self.parsers = {}
+    self.parsers['SchemaFreeParser'] = pql.SchemaFreeParser()
+    self.parsers['AggregationParser'] = pql.AggregationParser()
+    self.parsers['AggregationGroupParser'] = pql.AggregationParser()
     super(S, self).__init__( *args, **kwargs )
 
   def run(self, cmd):
@@ -19,10 +22,10 @@ class S(BaseHTTPRequestHandler, object):
     return out
 
   def process(self, path, q):
-    if path == 'expr2mongo':
+    if path in self.parsers:
       if not ('expr' in q):
         return "error: invalid parameters passed".encode()
-      return json.dumps(self.parser.parse(q['expr'][0])).encode()
+      return json.dumps(self.parsers[path].parse(q['expr'][0])).encode()
     return 'error: invalid method'.encode()
 
   def _set_headers(self):
