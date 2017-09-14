@@ -20,14 +20,19 @@ docker run --name pythontools -d -p 8000:80 pythontools
 ### Testing
 
 ```
-curl http://localhost:8000/expr2mongo?expr=a==1
+curl http://localhost:8000/SchemaFreeParser?expr=a==1
 {"a": 1}
 ```
 
 
 ```
-curl -G "localhost:9111/expr2mongo" --data-urlencode "expr=(a == 1) and (b > 2)"
+curl -G "localhost:8000/SchemaFreeParser" --data-urlencode "expr=(a == 1) and (b > 2)"
 {"$and": [{"a": 1}, {"b": {"$gt": 2}}]}
+```
+
+```
+curl -G "localhost:8000/AggregationParser" --data-urlencode "expr=(a == 1) and (b > 2)"
+{"$and": [{"$eq": ["$a", 1]}, {"$gt": ["$b", 2]}]}
 ```
 
 ### Credits
